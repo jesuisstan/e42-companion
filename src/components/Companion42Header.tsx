@@ -1,10 +1,11 @@
-import { StyleSheet, Image, View } from 'react-native';
+import { StyleSheet, Image, View, Pressable } from 'react-native';
 import { Header } from '@rneui/themed';
 
 import { useUser } from '@/contexts/UserContext';
-import ButtonLogOut from '@/components/ButtonLogOut';
 import { ThemedText } from '@/components/ui/ThemedText';
-import { C42_GREEN } from '@/style/Colors';
+import { C42_GREEN, C42_TEXT } from '@/style/Colors';
+import { Ionicons } from '@expo/vector-icons';
+import SearchBar42 from '@/components/SearchBar42';
 
 const Companion42Header = () => {
   const { user } = useUser();
@@ -13,20 +14,28 @@ const Companion42Header = () => {
     <Header
       containerStyle={styles.header}
       backgroundColor={C42_GREEN}
-      leftComponent={
-        <Image source={{ uri: user?.photoURL! }} style={styles.image} />
-      }
+      //leftComponent={
+      //  <Image source={{ uri: user?.photoURL! }} style={styles.image} />
+      //}
       centerComponent={
-        <View>
-          <ThemedText type="defaultSemiBold" style={styles.centerComponent}>
-            {user?.displayName?.split(' ')[0]}
-          </ThemedText>
-          <ThemedText type="subtitle" style={styles.centerComponent}>
-            {user?.displayName?.split(' ')[1]}
-          </ThemedText>
-        </View>
+        //<View>
+        //  <ThemedText type="defaultSemiBold" style={styles.centerComponent}>
+        //    Text 1
+        //  </ThemedText>
+        //  <ThemedText type="subtitle" style={styles.centerComponent}>
+        //    Text 2
+        //  </ThemedText>
+        //</View>
+        <SearchBar42 />
       }
-      rightComponent={<ButtonLogOut />}
+      rightComponent={
+        <Pressable
+          style={styles.btn}
+          onPress={() => console.log('button pressed')}
+        >
+          <Ionicons name="exit-outline" size={35} color={C42_TEXT} />
+        </Pressable>
+      }
       placement="center"
     />
   );
@@ -46,6 +55,10 @@ const styles = StyleSheet.create({
   },
   centerComponent: {
     textAlign: 'center',
+    justifyContent: 'center'
+  },
+  btn: {
+    flex: 1,
     justifyContent: 'center'
   }
 });

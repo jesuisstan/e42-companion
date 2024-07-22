@@ -3,7 +3,6 @@ import React, { useEffect } from 'react';
 import { View, StyleSheet, StatusBar } from 'react-native';
 import { Stack } from 'expo-router';
 
-import LoginScreen from '@/components/LoginScreen';
 import { useUser } from '@/contexts/UserContext';
 import { useNetwork } from '@/contexts/NetworkContext';
 import { C42_GREEN } from '@/style/Colors';
@@ -28,14 +27,10 @@ const Companion42App = () => {
         showHideTransition="slide"
         hidden={false}
       />
-      {!user ? (
-        <LoginScreen />
-      ) : (
-        <Stack>
-          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-          <Stack.Screen name="+not-found" />
-        </Stack>
-      )}
+      <Stack>
+        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+        <Stack.Screen name="+not-found" />
+      </Stack>
     </View>
   );
 };
