@@ -1,10 +1,10 @@
 import 'react-native-reanimated';
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
 import * as ScreenOrientation from 'expo-screen-orientation';
 
-import { UserProvider } from '@/contexts/UserContext';
+import { PeerProvider } from '@/contexts/PeerContext';
 import { NetworkProvider } from '@/contexts/NetworkContext';
 import Companion42App from '@/components/Companion42App';
 
@@ -31,9 +31,9 @@ const RootLayout = () => {
 
   return (
     <NetworkProvider>
-      <UserProvider>
+      <PeerProvider>
         <Companion42App />
-      </UserProvider>
+      </PeerProvider>
     </NetworkProvider>
   );
 };

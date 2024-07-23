@@ -24,7 +24,10 @@ export default {
       output: 'static',
       favicon: './assets/images/favicon.png'
     },
-    plugins: ['expo-router', 'expo-secure-store'],
+    plugins: [
+      ['expo-router'],
+      ['expo-secure-store', {}] // Explicitly configure the plugin
+    ],
     experiments: {
       typedRoutes: true
     },

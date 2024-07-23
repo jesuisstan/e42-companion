@@ -1,17 +1,14 @@
 import 'react-native-reanimated';
-import React, { useEffect } from 'react';
-import { View, StyleSheet, StatusBar } from 'react-native';
+import { useEffect } from 'react';
+import { StyleSheet, StatusBar, SafeAreaView } from 'react-native';
 import { Stack } from 'expo-router';
 
-import { useUser } from '@/contexts/UserContext';
 import { useNetwork } from '@/contexts/NetworkContext';
 import { C42_GREEN } from '@/style/Colors';
 import shootAlert from '@/utils/shoot-alert';
 
 const Companion42App = () => {
   const { isConnected } = useNetwork();
-  const { user } = useUser();
-
   useEffect(() => {
     if (!isConnected) {
       shootAlert('Network Error!', 'Please check your internet connection.');
@@ -19,7 +16,7 @@ const Companion42App = () => {
   }, [isConnected]);
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <StatusBar
         animated={true}
         backgroundColor={C42_GREEN}
@@ -28,10 +25,11 @@ const Companion42App = () => {
         hidden={false}
       />
       <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+        <Stack.Screen name="index" options={{ headerShown: false }} />
+        <Stack.Screen name="agenda" />
         <Stack.Screen name="+not-found" />
       </Stack>
-    </View>
+    </SafeAreaView>
   );
 };
 
