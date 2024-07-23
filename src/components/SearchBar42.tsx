@@ -1,8 +1,10 @@
 import * as React from 'react';
 import { SearchBar } from '@rneui/base';
+import { C42_GREY } from '@/style/Colors';
 
-const SearchBar42 = () => {
+const SearchBar42 = ({ placeholder }: { placeholder?: string }) => {
   const [value, setValue] = React.useState('');
+  console.log('value', value); // debug
 
   return (
     <SearchBar
@@ -14,12 +16,13 @@ const SearchBar42 = () => {
       rightIconContainerStyle={{}}
       onChangeText={(newVal) => setValue(newVal)}
       //onClearText={() => console.log(onClearText())}
-      placeholder="Type query here..."
-      placeholderTextColor="#888"
+      placeholder={placeholder}
+      placeholderTextColor={C42_GREY}
       //showLoading
       //loadingProps={{}}
       //onCancel={() => console.log(onCancel())}
       value={value}
+      onSubmitEditing={() => console.log('onSubmitEditing')}
     />
   );
 };

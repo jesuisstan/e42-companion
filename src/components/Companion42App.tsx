@@ -19,7 +19,7 @@ const Companion42App = () => {
     <SafeAreaView style={styles.container}>
       <StatusBar
         animated={true}
-        backgroundColor={C42_GREEN}
+        //backgroundColor={C42_GREEN}
         barStyle="dark-content"
         showHideTransition="slide"
         hidden={false}

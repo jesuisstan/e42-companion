@@ -20,7 +20,7 @@ const HomeScreen = () => {
         <ScrollView contentContainerStyle={styles.scrollContainer}>
           <ThemedView style={styles.centeredView}>
             <InfoModal />
-            <SearchBar42 />
+            <SearchBar42 placeholder="Find 42 peer" />
             <ToggleThemeButton />
             <LinkButton href="/agenda" text="Go to Agenda" />
           </ThemedView>
