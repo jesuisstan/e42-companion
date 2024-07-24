@@ -34,34 +34,62 @@ const InfoModal = () => {
           ]}
         >
           <ScrollView contentContainerStyle={styles.scrollViewContent}>
-            <ThemedText type="subtitle" style={styles.centeredText}>
+            <ThemedText
+              type="subtitle"
+              style={[styles.centeredText, { color: theme.C42_TEXT }]}
+            >
               Welcome to
             </ThemedText>
-            <ThemedText type="title" style={styles.centeredText}>
+            <ThemedText
+              type="title"
+              style={[styles.centeredText, { color: theme.C42_TEXT }]}
+            >
               E42 companion
             </ThemedText>
-            <ThemedText type="default">The app is helpful to:</ThemedText>
+            <ThemedText type="default" style={{ color: theme.C42_TEXT }}>
+              The app is helpful to:
+            </ThemedText>
 
             <Collapsible title="Get 42 students' contacts">
               <View>
-                <ThemedText>- login</ThemedText>
-                <ThemedText>- email</ThemedText>
-                <ThemedText>- mobile</ThemedText>
-                <ThemedText>- location</ThemedText>
-                <ThemedText>- profile picture</ThemedText>
+                <ThemedText style={{ color: theme.C42_TEXT }}>
+                  - login
+                </ThemedText>
+                <ThemedText style={{ color: theme.C42_TEXT }}>
+                  - email
+                </ThemedText>
+                <ThemedText style={{ color: theme.C42_TEXT }}>
+                  - mobile
+                </ThemedText>
+                <ThemedText style={{ color: theme.C42_TEXT }}>
+                  - location
+                </ThemedText>
+                <ThemedText style={{ color: theme.C42_TEXT }}>
+                  - profile picture
+                </ThemedText>
               </View>
             </Collapsible>
             <Collapsible title="Track 42 students' progress">
               <View>
-                <ThemedText>- level</ThemedText>
-                <ThemedText>- wallet</ThemedText>
-                <ThemedText>- skills</ThemedText>
+                <ThemedText style={{ color: theme.C42_TEXT }}>
+                  - level
+                </ThemedText>
+                <ThemedText style={{ color: theme.C42_TEXT }}>
+                  - wallet
+                </ThemedText>
+                <ThemedText style={{ color: theme.C42_TEXT }}>
+                  - skills
+                </ThemedText>
               </View>
             </Collapsible>
             <Collapsible title="Check 42 students' activity">
               <View>
-                <ThemedText>- projects</ThemedText>
-                <ThemedText>- evaluations</ThemedText>
+                <ThemedText style={{ color: theme.C42_TEXT }}>
+                  - projects
+                </ThemedText>
+                <ThemedText style={{ color: theme.C42_TEXT }}>
+                  - evaluations
+                </ThemedText>
               </View>
             </Collapsible>
           </ScrollView>
@@ -81,7 +109,8 @@ const styles = StyleSheet.create({
   overlayContent: {
     padding: 20,
     width: 300,
-    gap: 10
+    gap: 10,
+    margin: -9
   },
   scrollViewContent: {
     flexGrow: 1,

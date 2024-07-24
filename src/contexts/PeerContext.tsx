@@ -1,6 +1,7 @@
 import { FC, createContext, ReactNode, useContext, useState } from 'react';
 
-export type TPeer = {};
+export type TPeer = any;
+
 type TPeerContextType = {
   peer: TPeer | null;
   setPeer: (peer: TPeer | null) => void;
