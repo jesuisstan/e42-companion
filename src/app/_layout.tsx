@@ -7,6 +7,7 @@ import * as ScreenOrientation from 'expo-screen-orientation';
 import { PeerProvider } from '@/contexts/PeerContext';
 import { NetworkProvider } from '@/contexts/NetworkContext';
 import Companion42App from '@/components/Companion42App';
+import { ThemeProvider } from '@/contexts/ThemeContext';
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
@@ -30,11 +31,13 @@ const RootLayout = () => {
   }
 
   return (
-    <NetworkProvider>
-      <PeerProvider>
-        <Companion42App />
-      </PeerProvider>
-    </NetworkProvider>
+    <ThemeProvider>
+      <NetworkProvider>
+        <PeerProvider>
+          <Companion42App />
+        </PeerProvider>
+      </NetworkProvider>
+    </ThemeProvider>
   );
 };
 

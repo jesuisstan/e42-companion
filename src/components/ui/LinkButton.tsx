@@ -2,7 +2,7 @@ import { Link } from 'expo-router';
 import { Pressable, Text, StyleSheet } from 'react-native';
 import { C42_GREEN, C42_TEXT } from '@/style/Colors';
 
-const HomeScreen = ({ href, text }: { href: string; text: string }) => {
+const LinkButton = ({ href, text }: { href: string; text: string }) => {
   return (
     <Link href={href} asChild>
       <Pressable style={styles.button}>
@@ -12,7 +12,7 @@ const HomeScreen = ({ href, text }: { href: string; text: string }) => {
   );
 };
 
-export default HomeScreen;
+export default LinkButton;
 
 const styles = StyleSheet.create({
   button: {

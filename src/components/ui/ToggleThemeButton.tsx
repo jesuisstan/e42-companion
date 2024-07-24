@@ -1,18 +1,18 @@
+import React from 'react';
 import { View, StyleSheet, TouchableOpacity } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { C42_ORANGE } from '@/style/Colors';
+import { useTheme } from '@/contexts/ThemeContext';
 
 const ToggleThemeButton = () => {
+  const { theme, toggleTheme } = useTheme();
+
   return (
     <View>
-      <TouchableOpacity
-        style={styles.iconButton}
-        onPress={() => console.log('Toggle theme pushed')}
-      >
+      <TouchableOpacity style={styles.iconButton} onPress={toggleTheme}>
         <MaterialCommunityIcons
           name="theme-light-dark"
           size={42}
-          color={C42_ORANGE}
+          color={theme.C42_ORANGE}
         />
       </TouchableOpacity>
     </View>

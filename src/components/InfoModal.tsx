@@ -8,11 +8,12 @@ import {
 } from 'react-native';
 import { Overlay } from '@rneui/themed';
 import { AntDesign } from '@expo/vector-icons';
-import { C42_TEXT, C42_BACKGROUND, C42_ORANGE } from '@/style/Colors';
 import Collapsible from '@/components/ui/Collapsible';
 import { ThemedText } from '@/components/ui/ThemedText';
+import { useTheme } from '@/contexts/ThemeContext';
 
 const InfoModal = () => {
+  const { theme } = useTheme();
   const { height } = useWindowDimensions();
   const [visible, setVisible] = useState(false);
 
@@ -23,10 +24,15 @@ const InfoModal = () => {
   return (
     <View>
       <TouchableOpacity style={styles.iconButton} onPress={toggleOverlay}>
-        <AntDesign name="questioncircleo" size={42} color={C42_ORANGE} />
+        <AntDesign name="questioncircleo" size={42} color={theme.C42_ORANGE} />
       </TouchableOpacity>
       <Overlay isVisible={visible} onBackdropPress={toggleOverlay}>
-        <View style={[styles.overlayContent, { minHeight: 0.4 * height }]}>
+        <View
+          style={[
+            styles.overlayContent,
+            { minHeight: 0.4 * height, backgroundColor: theme.C42_BACKGROUND }
+          ]}
+        >
           <ScrollView contentContainerStyle={styles.scrollViewContent}>
             <ThemedText type="subtitle" style={styles.centeredText}>
               Welcome to
@@ -75,8 +81,7 @@ const styles = StyleSheet.create({
   overlayContent: {
     padding: 20,
     width: 300,
-    gap: 10,
-    backgroundColor: C42_BACKGROUND
+    gap: 10
   },
   scrollViewContent: {
     flexGrow: 1,

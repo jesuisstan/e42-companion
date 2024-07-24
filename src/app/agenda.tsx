@@ -12,11 +12,14 @@ import {
 import storage from '@/storage/storage';
 import axios from 'axios';
 import { Token } from '@/storage/storage';
+import { useTheme } from '@/contexts/ThemeContext';
 
 const UID = process.env.EXPO_PUBLIC_42_UID;
 const CLIENT = process.env.EXPO_PUBLIC_42_SECRET;
 
 const AgendaScreen = () => {
+  const { theme, toggleTheme } = useTheme();
+
   const [text, setValue] = useState('');
   const [load, setLoad] = useState(false);
   const [token, setToken] = useState<string>('');
@@ -82,7 +85,6 @@ const AgendaScreen = () => {
               //navigation.navigate('Profile');
               console.log('rs', JSON.stringify(rs, null, 2));
               //console.log('coalition', JSON.stringify(coalition.data, null, 2));
-
             });
         })
         .catch(() => {
@@ -105,8 +107,8 @@ const AgendaScreen = () => {
               style={[
                 styles.input,
                 {
-                  backgroundColor: 'white',
-                  color: '#292D39'
+                  backgroundColor: theme.C42_BACKGROUND,
+                  color: theme.C42_TEXT
                 }
               ]}
               onChangeText={(e) => setValue(e.trim())}

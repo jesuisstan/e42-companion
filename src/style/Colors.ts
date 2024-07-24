@@ -16,24 +16,3 @@ export const C42_TEXT_DARK = '#ED8179';
 export const C42_BACKGROUND = '#F5F5F5';
 export const C42_BACKGROUND_DARK = '#151718';
 export const C42_RED = '#ce3a49';
-
-export const Colors = {
-  light: {
-    text: C42_TEXT,
-    background: C42_BACKGROUND,
-    border: C42_ORANGE,
-    tint: C42_GREEN,
-    icon: C42_ORANGE,
-    tabIconDefault: C42_ORANGE,
-    tabIconSelected: C42_GREEN
-  },
-  dark: {
-    text: C42_TEXT_DARK,
-    background: C42_BACKGROUND_DARK,
-    border: C42_ORANGE_DARK,
-    tint: C42_GREEN_DARK,
-    icon: C42_ORANGE_DARK,
-    tabIconDefault: C42_ORANGE_DARK,
-    tabIconSelected: C42_GREEN_DARK
-  }
-};

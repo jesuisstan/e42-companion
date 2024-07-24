@@ -4,7 +4,7 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 
 import { ThemedText } from '@/components/ui/ThemedText';
 import ThemedView from '@/components/ui/ThemedView';
-import { C42_ORANGE } from '@/style/Colors';
+import { useTheme } from '@/contexts/ThemeContext';
 
 type TCollapsibleProps = ViewProps & {
   title: string;
@@ -17,6 +17,7 @@ const Collapsible: FC<TCollapsibleProps> = ({
   children
 }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const { theme } = useTheme();
 
   return (
     <ThemedView style={style}>
@@ -28,7 +29,7 @@ const Collapsible: FC<TCollapsibleProps> = ({
         <Ionicons
           name={isOpen ? 'chevron-down' : 'chevron-forward-outline'}
           size={18}
-          color={C42_ORANGE}
+          color={theme.C42_ORANGE}
         />
         <ThemedText type="defaultSemiBold">{title}</ThemedText>
       </Pressable>

@@ -4,11 +4,11 @@ import { StyleSheet, StatusBar, SafeAreaView } from 'react-native';
 import { Stack } from 'expo-router';
 
 import { useNetwork } from '@/contexts/NetworkContext';
-import { C42_GREEN } from '@/style/Colors';
 import shootAlert from '@/utils/shoot-alert';
 
 const Companion42App = () => {
   const { isConnected } = useNetwork();
+
   useEffect(() => {
     if (!isConnected) {
       shootAlert('Network Error!', 'Please check your internet connection.');
