@@ -3,8 +3,11 @@ import React, { createContext, useState, useContext, ReactNode } from 'react';
 import { ThemeProvider as StyledThemeProvider } from 'styled-components/native';
 import { lightTheme, darkTheme, Theme } from '@/style/themes';
 
+type ThemeName = 'light' | 'dark';
+
 type ThemeContextType = {
   theme: Theme;
+  themeName: ThemeName; // Add this line
   toggleTheme: () => void;
 };
 
@@ -23,16 +26,17 @@ type ThemeProviderProps = {
 };
 
 export const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
-  const [theme, setTheme] = useState(lightTheme);
+  const [themeName, setThemeName] = useState<ThemeName>('light'); // Track theme name
+  const theme = themeName === 'light' ? lightTheme : darkTheme;
 
   const toggleTheme = () => {
-    setTheme((prevTheme) =>
-      prevTheme === lightTheme ? darkTheme : lightTheme
+    setThemeName((prevThemeName) =>
+      prevThemeName === 'light' ? 'dark' : 'light'
     );
   };
 
   return (
-    <ThemeContext.Provider value={{ theme, toggleTheme }}>
+    <ThemeContext.Provider value={{ theme, themeName, toggleTheme }}>
       <StyledThemeProvider theme={theme}>{children}</StyledThemeProvider>
     </ThemeContext.Provider>
   );
