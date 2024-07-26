@@ -18,12 +18,10 @@ const SearchBar42 = ({ token, placeholder }: TSearchBar42Props) => {
   const { theme } = useTheme();
   const [value, setValue] = React.useState('');
   const [loading, setLoading] = React.useState(false);
-  const { setPeer } = usePeer();
+  const { setPeer, setCoalitions } = usePeer();
 
-  // Function to filter input to allow only alphabetic characters
   const handleChangeText = (text: string) => {
-    // Allow only letters (a-z, A-Z)
-    const filteredText = text.replace(/[^a-zA-Z]/g, '');
+    const filteredText = text.replace(/\s/g, ''); // Allow all characters except spaces
     setValue(filteredText);
   };
 
@@ -32,9 +30,9 @@ const SearchBar42 = ({ token, placeholder }: TSearchBar42Props) => {
 
     setLoading(true);
     try {
-      const { user } = await fetchUserData(value, token);
+      const { user, coalition } = await fetchUserData(value, token);
       setPeer(user);
-      console.log('PEER Data:', JSON.stringify(user)); // Debug
+      setCoalitions(coalition);
       router.push('/agenda'); // Navigate to /agenda
     } catch (error) {
       if (error instanceof Error) {

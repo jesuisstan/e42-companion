@@ -5,23 +5,70 @@ import {
   Image,
   Text,
   ActivityIndicator,
-  TouchableOpacity,
+  ImageBackground,
   SafeAreaView
 } from 'react-native';
 import { useTheme } from '@/contexts/ThemeContext';
 import { usePeer } from '@/contexts/PeerContext';
+import { defineCoalition } from '@/utils/define-coalition';
+import { defineCourse } from '@/utils/define-course';
+import { ThemedText } from '@/components/ui/ThemedText';
 
 const AgendaScreen = () => {
   const { theme } = useTheme();
-  const { peer } = usePeer();
+  const { peer, coalitions } = usePeer();
 
   return (
     <SafeAreaView style={{ backgroundColor: theme.C42_BACKGROUND, flex: 1 }}>
-      <View style={styles.container}>
-        <Text style={{ color: theme.C42_TEXT }}>PEER: {peer?.login}</Text>
-        <Text style={{ color: theme.C42_TEXT }}>{peer?.email}</Text>
-        <Image style={styles.logo} source={{ uri: peer?.image.link }} />
-      </View>
+      <ImageBackground
+        source={{ uri: defineCoalition(coalitions).cover_url }}
+        style={styles.bgImage}
+      >
+        <View style={styles.container}>
+          <ThemedText style={{ color: theme.C42_TEXT }}>
+            PEER: {peer?.login}
+          </ThemedText>
+          <Image style={styles.logo} source={{ uri: peer?.image.link }} />
+          <ThemedText style={{ color: theme.C42_TEXT }}>
+            name: {peer?.displayname}
+          </ThemedText>
+
+          <ThemedText style={{ color: theme.C42_TEXT }}>
+            Campus: {peer.campus[peer.campus.length - 1].city},{' '}
+            {peer.campus[peer.campus.length - 1].country}
+          </ThemedText>
+          <ThemedText style={{ color: theme.C42_TEXT }}>
+            Link: {peer?.url}
+          </ThemedText>
+
+          <ThemedText style={{ color: theme.C42_TEXT, fontFamily: 'DMSans' }}>
+            email: {peer?.email}
+          </ThemedText>
+          <ThemedText style={{ color: theme.C42_TEXT }}>
+            phone: {peer?.phone}
+          </ThemedText>
+          <ThemedText style={{ color: theme.C42_TEXT }}>
+            Grade: {defineCourse(peer.cursus_users).grade}
+          </ThemedText>
+          <ThemedText style={{ color: theme.C42_TEXT }}>
+            Level: {defineCourse(peer.cursus_users).level}
+          </ThemedText>
+
+          <ThemedText style={{ color: theme.C42_TEXT }}>
+            Correction point: {peer?.correction_point}
+          </ThemedText>
+          <ThemedText style={{ color: theme.C42_TEXT }}>
+            Wallet: {peer?.wallet}
+          </ThemedText>
+          <ThemedText style={{ color: theme.C42_TEXT }}>
+            Coalition: {defineCoalition(coalitions).name}
+          </ThemedText>
+          {/*<Image
+            style={styles.logo}
+            source={{ uri: coalitions.at(-1)?.image_url }}
+          />*/}
+        </View>
+      </ImageBackground>
     </SafeAreaView>
   );
 };
@@ -31,6 +78,11 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center'
+  },
+  bgImage: {
+    flex: 1,
+    resizeMode: 'cover',
+    justifyContent: 'center'
   },
   logo: {
     width: 200,

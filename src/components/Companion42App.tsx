@@ -5,9 +5,11 @@ import { Stack } from 'expo-router';
 
 import { useNetwork } from '@/contexts/NetworkContext';
 import shootAlert from '@/utils/shoot-alert';
+import { useTheme } from '@/contexts/ThemeContext';
 
 const Companion42App = () => {
   const { isConnected } = useNetwork();
+  const { theme } = useTheme();
 
   useEffect(() => {
     if (!isConnected) {
@@ -26,7 +28,19 @@ const Companion42App = () => {
       />
       <Stack>
         <Stack.Screen name="index" options={{ headerShown: false }} />
-        <Stack.Screen name="agenda" />
+        <Stack.Screen
+          name="agenda"
+          options={{
+            title: 'Profile & Agenda',
+            headerShown: true,
+            headerStyle: { backgroundColor: theme.C42_BACKGROUND },
+            headerTintColor: theme.C42_TEXT,
+            headerTitleStyle: {
+              fontSize: 15,
+              fontFamily: 'DMSans'
+            }
+          }}
+        />
         <Stack.Screen name="+not-found" />
       </Stack>
     </SafeAreaView>

@@ -6,7 +6,7 @@ import { useTheme } from '@/contexts/ThemeContext';
 
 const ToggleThemeButton = () => {
   const { theme, themeName, toggleTheme } = useTheme();
-  console.log('theme name', theme);
+
   return (
     <View>
       <TouchableOpacity style={styles.iconButton} onPress={toggleTheme}>

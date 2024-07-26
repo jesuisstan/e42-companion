@@ -57,7 +57,7 @@ const HomeScreen = () => {
     <SafeAreaView style={styles.safeArea}>
       <ImageBackground
         source={require('../../assets/images/background.jpg')}
-        style={styles.image}
+        style={styles.bgImage}
       >
         <ScrollView contentContainerStyle={styles.scrollContainer}>
           <ThemedView style={styles.centeredView}>
@@ -95,7 +95,7 @@ const styles = StyleSheet.create({
     paddingBottom: 20,
     gap: 42
   },
-  image: {
+  bgImage: {
     flex: 1,
     resizeMode: 'cover',
     justifyContent: 'center'

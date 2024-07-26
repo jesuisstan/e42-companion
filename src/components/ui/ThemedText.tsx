@@ -12,6 +12,7 @@ export function ThemedText({
   return (
     <Text
       style={[
+        { fontFamily: 'DMSans' },
         type === 'default' ? styles.default : undefined,
         type === 'title' ? styles.title : undefined,
         type === 'defaultSemiBold' ? styles.defaultSemiBold : undefined,
