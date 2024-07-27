@@ -16,7 +16,6 @@ import { ThemedText } from '@/components/ui/ThemedText';
 import ButtonLoading from '@/components/ui/ButtonLoading';
 import { hexToRgba } from '@/utils/color-transform';
 import { List } from 'react-native-paper';
-import Spinner from '@/components/ui/Spinner';
 
 const ProjectsScreen = () => {
   const router = useRouter();
@@ -24,29 +23,41 @@ const ProjectsScreen = () => {
   const { peer, coalitions, projects } = usePeer();
 
   const renderList = ({ item }: { item: any }) => {
-    console.log(item);
     return (
       <List.Item
         title={item.project.name}
         description={item.project.slug}
+        //onPress={() => router.push(`/project/${item.project.slug}`)} todo
         right={(props) => (
           <>
-            {item.validated ? (
+            {item['validated?'] ? (
               <Text
                 style={{
-                  fontSize: 10,
-                  color: item.validated ? theme.C42_GREEN : theme.C42_RED,
+                  fontSize: 13,
+                  color: item['validated?'] ? theme.C42_GREEN : theme.C42_RED,
                   margin: 'auto'
                 }}
               >
-                {item.final_mark} {item.status}
+                {item.status} {item.final_mark}
               </Text>
             ) : (
-              <Spinner size={10} />
+              <Text
+                style={{
+                  fontSize: 13,
+                  color: item['validated?'] ? theme.C42_GREEN : theme.C42_RED,
+                  margin: 'auto'
+                }}
+              >
+                {item.status} {item.final_mark}
+              </Text>
             )}
           </>
         )}
-        style={{ borderBottomWidth: 0.1, borderColor: theme.C42_ORANGE }}
+        style={{
+          borderBottomWidth: 0.7,
+          borderColor: theme.C42_ORANGE,
+          backgroundColor: hexToRgba(theme.C42_BACKGROUND, 0.7)
+        }}
         titleStyle={{ color: theme.C42_TEXT }}
         descriptionStyle={{ fontSize: 10, color: theme.C42_GREY }}
       />
@@ -67,7 +78,7 @@ const ProjectsScreen = () => {
               styles.title,
               {
                 color: theme.C42_TEXT,
-                backgroundColor: theme.C42_BACKGROUND,
+                backgroundColor: hexToRgba(theme.C42_BACKGROUND, 0.7),
                 borderColor: theme.C42_GREEN
               }
             ]}

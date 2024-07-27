@@ -95,6 +95,9 @@ export const fetchProjectsData = async (userId: number, token: string) => {
       {
         headers: {
           Authorization: `Bearer ${token}`
+        },
+        params: {
+          'page[size]': 100 // Set the maximum number of items per page to 100
         }
       }
     );
