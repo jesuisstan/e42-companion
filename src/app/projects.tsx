@@ -1,68 +1,89 @@
-import React from 'react';
-import { useRouter } from 'expo-router';
+import React, { useState, useEffect } from 'react';
 import {
   View,
   ImageBackground,
   SafeAreaView,
-  ScrollView,
-  StyleSheet,
   FlatList,
-  Text
+  Text,
+  StyleSheet
 } from 'react-native';
+import { useRouter } from 'expo-router';
+import axios from 'axios';
+import { List } from 'react-native-paper';
+
 import { useTheme } from '@/contexts/ThemeContext';
-import { usePeer } from '@/contexts/PeerContext';
+import { TProject, usePeer } from '@/contexts/PeerContext';
 import { defineCoalition } from '@/utils/define-coalition';
 import { ThemedText } from '@/components/ui/ThemedText';
 import ButtonLoading from '@/components/ui/ButtonLoading';
 import { hexToRgba } from '@/utils/color-transform';
-import { List } from 'react-native-paper';
+import storage from '@/storage/storage';
+import Spinner from '@/components/ui/Spinner';
+import { snakeToSpace } from '@/utils/format-string';
+import { C42_GREEN_DARK } from '@/style/Colors';
 
 const ProjectsScreen = () => {
   const router = useRouter();
   const { theme } = useTheme();
-  const { peer, coalitions, projects } = usePeer();
+  const { peer, coalitions, projects, setProjects } = usePeer();
+  const [page, setPage] = useState(2); // Start from 2 as the first page is already loaded
+  const [loading, setLoading] = useState(false);
 
-  const renderList = ({ item }: { item: any }) => {
-    return (
-      <List.Item
-        title={item.project.name}
-        description={item.project.slug}
-        //onPress={() => router.push(`/project/${item.project.slug}`)} todo
-        right={(props) => (
-          <>
-            {item['validated?'] ? (
-              <Text
-                style={{
-                  fontSize: 13,
-                  color: item['validated?'] ? theme.C42_GREEN : theme.C42_RED,
-                  margin: 'auto'
-                }}
-              >
-                {item.status} {item.final_mark}
-              </Text>
-            ) : (
-              <Text
-                style={{
-                  fontSize: 13,
-                  color: item['validated?'] ? theme.C42_GREEN : theme.C42_RED,
-                  margin: 'auto'
-                }}
-              >
-                {item.status} {item.final_mark}
-              </Text>
-            )}
-          </>
-        )}
-        style={{
-          borderBottomWidth: 0.7,
-          borderColor: theme.C42_ORANGE,
-          backgroundColor: hexToRgba(theme.C42_BACKGROUND, 0.7)
-        }}
-        titleStyle={{ color: theme.C42_TEXT }}
-        descriptionStyle={{ fontSize: 10, color: theme.C42_GREY }}
-      />
-    );
+  const fetchMoreProjects = async () => {
+    if (loading) return;
+
+    setLoading(true);
+    try {
+      const storedTokenData = await storage.load('dataToken');
+      const token = storedTokenData?.access_token;
+      const response = await axios.get<TProject[]>(
+        `https://api.intra.42.fr/v2/users/${peer.id}/projects_users`,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+          params: { 'page[size]': 42, 'page[number]': page }
+        }
+      );
+      setProjects((prevProjects: TProject[]) => [
+        ...prevProjects,
+        ...response.data
+      ]);
+      setPage(page + 1);
+    } catch (error) {
+      console.error('Error fetching more projects:', error);
+    } finally {
+      setLoading(false);
+    }
   };
+
+  const renderList = ({ item }: { item: TProject }) => (
+    <List.Item
+      title={item.project.name}
+      description={item.project.slug}
+      right={() => (
+        <Text
+          style={{
+            fontSize: 13,
+            color: item['validated?'] ? C42_GREEN_DARK : theme.C42_RED,
+            margin: 'auto'
+          }}
+        >
+          {snakeToSpace(item.status)} {item.final_mark}
+        </Text>
+      )}
+      style={{
+        borderBottomWidth: 0.6,
+        borderColor: theme.C42_ORANGE,
+        backgroundColor: hexToRgba(theme.C42_BACKGROUND, 0.85)
+      }}
+      titleStyle={{ color: theme.C42_TEXT, paddingRight: 10 }}
+      descriptionStyle={{
+        fontSize: 12,
+        color: theme.C42_TEXT,
+        fontStyle: 'italic',
+        paddingRight: 10
+      }}
+    />
+  );
 
   return (
     <SafeAreaView style={{ backgroundColor: theme.C42_BACKGROUND, flex: 1 }}>
@@ -71,14 +92,13 @@ const ProjectsScreen = () => {
         style={styles.bgImage}
       >
         <View style={styles.basicContainer}>
-          {/* TITLE */}
           <ThemedText
             type="title"
             style={[
               styles.title,
               {
                 color: theme.C42_TEXT,
-                backgroundColor: hexToRgba(theme.C42_BACKGROUND, 0.7),
+                backgroundColor: hexToRgba(theme.C42_BACKGROUND, 0.8),
                 borderColor: theme.C42_GREEN
               }
             ]}
@@ -86,23 +106,20 @@ const ProjectsScreen = () => {
             {peer.login} portfolio
           </ThemedText>
 
-          {/* PROJECTS LIST */}
-          {/*<ScrollView
-            contentContainerStyle={[
-              styles.scrollContainer,
-              { backgroundColor: hexToRgba(theme.C42_BACKGROUND, 0.7) }
-            ]}
-          >*/}
-          {/*<ThemedText>{JSON.stringify(projects, null, 1)}</ThemedText>*/}
-          {/*<SafeAreaView style={[
-              styles.scrollContainer,
-              { backgroundColor: hexToRgba(theme.C42_BACKGROUND, 0.7) }
-            ]}>*/}
-          {projects ? (
+          {projects.length > 0 ? (
             <FlatList
               data={projects}
               renderItem={renderList}
-              //keyExtractor={(item) => item.id}
+              keyExtractor={(item) => item.id.toString()}
+              onEndReached={fetchMoreProjects}
+              onEndReachedThreshold={0.5}
+              ListFooterComponent={
+                loading ? (
+                  <View style={{ margin: 10 }}>
+                    <Spinner size={21} />
+                  </View>
+                ) : null
+              }
             />
           ) : (
             <ThemedText
@@ -112,18 +129,17 @@ const ProjectsScreen = () => {
               Projects' list is unavailable yet
             </ThemedText>
           )}
-          {/*</SafeAreaView>*/}
-          {/*</ScrollView>*/}
 
-          {/* NAVIGATION */}
           <View style={styles.buttons}>
             <ButtonLoading
-              title="Back to profile"
+              title="To profile"
               onPress={() => router.push('/profile')}
+              icon="person"
             />
             <ButtonLoading
-              title="Back to search"
+              title="To search"
               onPress={() => router.push('/')}
+              icon="search"
             />
           </View>
         </View>
@@ -148,15 +164,6 @@ const styles = StyleSheet.create({
     maxWidth: 600,
     width: '100%'
   },
-  scrollContainer: {
-    flexGrow: 1,
-    justifyContent: 'flex-start',
-    padding: 15,
-    gap: 15,
-    alignItems: 'center',
-    maxWidth: 600,
-    width: '100%'
-  },
   bgImage: {
     flex: 1,
     resizeMode: 'cover',
@@ -166,8 +173,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-around',
     gap: 15
-    //padding: 15,
-    //margin: 15
   }
 });
 

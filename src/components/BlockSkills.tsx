@@ -16,7 +16,7 @@ const BlockSkills = ({ skills }: { skills: TSkill[] }) => {
       title={'Skills'}
       style={[
         styles.collapsibleSkills,
-        { backgroundColor: hexToRgba(theme.C42_BACKGROUND, 0.7) }
+        { backgroundColor: hexToRgba(theme.C42_BACKGROUND, 0.8) }
       ]}
     >
       <View style={[styles.skillsContainer]}>
@@ -27,7 +27,7 @@ const BlockSkills = ({ skills }: { skills: TSkill[] }) => {
             </ThemedText>
             <LinearProgress
               style={{ marginVertical: 5 }}
-              value={skill.level / 21}
+              value={Number((skill.level / 21).toFixed(1))}
               variant="determinate"
               color={theme.C42_GREEN}
             />

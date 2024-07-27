@@ -1,6 +1,7 @@
 import axios from 'axios';
 import storage, { Token } from '@/storage/storage';
 import shootAlert from './shoot-alert';
+import { TProject } from '@/contexts/PeerContext';
 
 const UID = process.env.EXPO_PUBLIC_42_UID as string;
 const CLIENT_PRIMARY = process.env.EXPO_PUBLIC_42_SECRET as string;
@@ -88,17 +89,17 @@ export const fetchUserData = async (username: string, token: string) => {
   }
 };
 
-export const fetchProjectsData = async (userId: number, token: string) => {
+export const fetchProjectsData = async (
+  userId: number,
+  token: string,
+  page: number
+) => {
   try {
-    const projectsResponse = await axios.get(
+    const projectsResponse = await axios.get<TProject[]>(
       `https://api.intra.42.fr/v2/users/${userId}/projects_users`,
       {
-        headers: {
-          Authorization: `Bearer ${token}`
-        },
-        params: {
-          'page[size]': 100 // Set the maximum number of items per page to 100
-        }
+        headers: { Authorization: `Bearer ${token}` },
+        params: { 'page[size]': 42, 'page[number]': page }
       }
     );
     return { projects: projectsResponse.data };

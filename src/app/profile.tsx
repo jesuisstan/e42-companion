@@ -6,6 +6,8 @@ import {
   ScrollView,
   StyleSheet
 } from 'react-native';
+import { useRouter } from 'expo-router';
+
 import { useTheme } from '@/contexts/ThemeContext';
 import { usePeer } from '@/contexts/PeerContext';
 import { defineCoalition } from '@/utils/define-coalition';
@@ -18,9 +20,11 @@ import { TSkill } from '@/utils/define-course';
 import BlockSkills from '@/components/BlockSkills';
 import BlockBasicInfo from '@/components/BlockBasicInfo';
 import { defineCampus } from '@/utils/define-campus';
-import ButtonLoadProjects from '@/components/ui/ButtonLoadProjects';
+import ButtonLoadProjects from '@/components/ButtonLoadProjects';
+import ButtonLoading from '@/components/ui/ButtonLoading';
 
 const ProfileScreen = () => {
+  const router = useRouter();
   const { theme } = useTheme();
   const { peer, coalitions } = usePeer();
   const definedCoalition = defineCoalition(coalitions);
@@ -48,7 +52,7 @@ const ProfileScreen = () => {
             opened={true}
             style={[
               styles.collapsible,
-              { backgroundColor: hexToRgba(theme.C42_BACKGROUND, 0.7) }
+              { backgroundColor: hexToRgba(theme.C42_BACKGROUND, 0.8) }
             ]}
           >
             <View style={styles.contactsCard}>
@@ -66,6 +70,13 @@ const ProfileScreen = () => {
 
           {/* Projects */}
           <ButtonLoadProjects peerId={peer?.id} />
+
+          {/* BACK TO SEARCH SCREEN */}
+          <ButtonLoading
+            title="To search"
+            onPress={() => router.push('/')}
+            icon="search"
+          />
         </ScrollView>
       </ImageBackground>
     </SafeAreaView>

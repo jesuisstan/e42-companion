@@ -1,4 +1,12 @@
-import { FC, createContext, ReactNode, useContext, useState } from 'react';
+import {
+  FC,
+  createContext,
+  ReactNode,
+  useContext,
+  useState,
+  Dispatch,
+  SetStateAction
+} from 'react';
 
 export type TPeer = any;
 
@@ -18,7 +26,7 @@ export type TProject = {
   occurrence: number;
   final_mark: number | null;
   status: string;
-  validated?: boolean | null;
+  'validated?': boolean | null;
   current_team_id: number;
   project: {
     id: number;
@@ -33,7 +41,7 @@ export type TProject = {
   created_at: string;
   updated_at: string;
   user: any;
-  teams?: [
+  teams: [
     {
       id: number;
       name: string;
@@ -55,9 +63,9 @@ export type TProject = {
           projects_user_id: number;
         }
       ];
-      locked?: boolean | null;
-      validated?: boolean | null;
-      closed?: boolean | null;
+      'locked?': boolean | null;
+      'validated?': boolean | null;
+      'closed?': boolean | null;
       repo_url: string;
       repo_uuid: string;
       locked_at: string;
@@ -72,9 +80,9 @@ type TPeerContextType = {
   peer: TPeer | null;
   setPeer: (peer: TPeer | null) => void;
   coalitions: TCoalition[];
-  setCoalitions: (coalitions: TCoalition[]) => void;
+  setCoalitions: Dispatch<SetStateAction<TCoalition[]>>;
   projects: TProject[];
-  setProjects: (projects: TProject[]) => void;
+  setProjects: Dispatch<SetStateAction<TProject[]>>;
 };
 
 type TPeerProviderProps = {

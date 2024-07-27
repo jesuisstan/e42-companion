@@ -26,7 +26,7 @@ const BlockBasicInfo = ({
     <View
       style={[
         styles.basicInfo,
-        { backgroundColor: hexToRgba(theme.C42_BACKGROUND, 0.7) }
+        { backgroundColor: hexToRgba(theme.C42_BACKGROUND, 0.8) }
       ]}
     >
       <View style={styles.rowContainer}>
