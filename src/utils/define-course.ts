@@ -1,4 +1,4 @@
-type TSkill = {
+export type TSkill = {
   id: number;
   name: string;
   level: number;
@@ -12,7 +12,7 @@ type TCursus = {
   kind: string;
 };
 
-type TCourse = {
+export type TCourse = {
   grade: string | null;
   level: number;
   skills: TSkill[];

@@ -9,14 +9,16 @@ import { useTheme } from '@/contexts/ThemeContext';
 type TCollapsibleProps = ViewProps & {
   title: string;
   children: React.ReactNode;
+  opened?: boolean;
 };
 
 const Collapsible: FC<TCollapsibleProps> = ({
   style = {},
   title,
-  children
+  children,
+  opened = false
 }) => {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(opened);
   const { theme } = useTheme();
 
   return (

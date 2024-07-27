@@ -77,9 +77,7 @@ const SearchBar42 = ({ token, placeholder }: TSearchBar42Props) => {
         disabled={loading}
       />
       <Button disabled={loading} onPress={handleSearch} color={theme.C42_GREEN}>
-        <ThemedText type="defaultSemiBold" style={{ color: theme.C42_TEXT }}>
-          Search!
-        </ThemedText>
+        Search!
       </Button>
     </>
   );
