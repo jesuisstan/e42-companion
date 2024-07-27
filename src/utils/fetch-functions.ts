@@ -87,3 +87,20 @@ export const fetchUserData = async (username: string, token: string) => {
     throw error;
   }
 };
+
+export const fetchProjectsData = async (userId: number, token: string) => {
+  try {
+    const projectsResponse = await axios.get(
+      `https://api.intra.42.fr/v2/users/${userId}/projects_users`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      }
+    );
+    return { projects: projectsResponse.data };
+  } catch (error) {
+    //console.error('Error fetching projects data:', error);
+    throw error;
+  }
+};

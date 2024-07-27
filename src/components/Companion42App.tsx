@@ -41,6 +41,19 @@ const Companion42App = () => {
             }
           }}
         />
+        <Stack.Screen
+          name="projects"
+          options={{
+            title: 'Projects of the 42 peer',
+            headerShown: true,
+            headerStyle: { backgroundColor: theme.C42_BACKGROUND },
+            headerTintColor: theme.C42_TEXT,
+            headerTitleStyle: {
+              fontSize: 15,
+              fontFamily: 'DMSans'
+            }
+          }}
+        />
         <Stack.Screen name="+not-found" />
       </Stack>
     </SafeAreaView>

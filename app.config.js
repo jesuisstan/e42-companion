@@ -10,13 +10,13 @@ export default {
     splash: {
       image: './assets/images/splash.png',
       resizeMode: 'contain',
-      backgroundColor: '#00babc'
+      backgroundColor: '#da5a51'
     },
     android: {
       package: 'com.krivtsoff.e42.companion',
       adaptiveIcon: {
         foregroundImage: './assets/images/adaptive-icon.png',
-        backgroundColor: '#00babc'
+        backgroundColor: '#da5a51'
       }
     },
     web: {

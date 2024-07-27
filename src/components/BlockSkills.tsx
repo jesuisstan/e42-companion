@@ -31,7 +31,16 @@ const BlockSkills = ({ skills }: { skills: TSkill[] }) => {
               variant="determinate"
               color={theme.C42_GREEN}
             />
-            <ThemedText type="value">{skill.level} lvl</ThemedText>
+            <ThemedText type="value">
+              {skill.level} lvl{' '}
+              <ThemedText
+                type="default"
+                style={{ color: theme.C42_TEXT, fontSize: 13 }}
+              >
+                {' '}
+                ({((skill.level / 21) * 100).toFixed(1)} %)
+              </ThemedText>
+            </ThemedText>
           </View>
         ))}
       </View>

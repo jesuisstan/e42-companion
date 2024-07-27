@@ -25,6 +25,7 @@ export default ToggleThemeButton;
 const styles = StyleSheet.create({
   iconButton: {
     alignSelf: 'center',
-    marginVertical: 10
+    marginVertical: 10,
+    marginHorizontal: 10
   }
 });

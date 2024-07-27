@@ -1,7 +1,6 @@
 import React from 'react';
 import {
   View,
-  Image,
   ImageBackground,
   SafeAreaView,
   ScrollView,
@@ -12,15 +11,14 @@ import { usePeer } from '@/contexts/PeerContext';
 import { defineCoalition } from '@/utils/define-coalition';
 import { defineCourse } from '@/utils/define-course';
 import { ThemedText } from '@/components/ui/ThemedText';
-import { SvgUri } from 'react-native-svg';
 import { hexToRgba } from '@/utils/color-transform';
-import { C42_GREEN_DARK, C42_ORANGE_DARK } from '@/style/Colors';
+import { C42_GREEN_DARK } from '@/style/Colors';
 import Collapsible from '@/components/ui/Collapsible';
-import { LinearProgress } from '@rneui/themed';
 import { TSkill } from '@/utils/define-course';
 import BlockSkills from '@/components/BlockSkills';
 import BlockBasicInfo from '@/components/BlockBasicInfo';
 import { defineCampus } from '@/utils/define-campus';
+import ButtonLoadProjects from '@/components/ui/ButtonLoadProjects';
 
 const ProfileScreen = () => {
   const { theme } = useTheme();
@@ -67,6 +65,7 @@ const ProfileScreen = () => {
           <BlockSkills skills={definedCourse.skills as TSkill[]} />
 
           {/* Projects */}
+          <ButtonLoadProjects peerId={peer?.id} />
         </ScrollView>
       </ImageBackground>
     </SafeAreaView>

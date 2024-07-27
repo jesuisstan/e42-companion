@@ -13,11 +13,24 @@ export type TCoalition = {
   user_id: number;
 };
 
+export type TProject = {
+  id: number;
+  name: string;
+  slug: string;
+  image_url: string;
+  cover_url: string;
+  color: string;
+  score: number;
+  user_id: number;
+};
+
 type TPeerContextType = {
   peer: TPeer | null;
   setPeer: (peer: TPeer | null) => void;
   coalitions: TCoalition[];
   setCoalitions: (coalitions: TCoalition[]) => void;
+  projects: TProject[];
+  setProjects: (coalitions: TCoalition[]) => void;
 };
 
 type TPeerProviderProps = {
@@ -28,7 +41,9 @@ const initialPeerContext: TPeerContextType = {
   peer: null,
   setPeer: () => {},
   coalitions: [],
-  setCoalitions: () => {}
+  setCoalitions: () => {},
+  projects: [],
+  setProjects: () => {}
 };
 
 const PeerContext = createContext<TPeerContextType>(initialPeerContext);
@@ -40,9 +55,19 @@ export const PeerProvider: FC<TPeerProviderProps> = ({
 }) => {
   const [peer, setPeer] = useState<TPeer | null>(null);
   const [coalitions, setCoalitions] = useState<TCoalition[]>([]);
+  const [projects, setProjects] = useState<TProject[]>([]);
 
   return (
-    <PeerContext.Provider value={{ peer, setPeer, coalitions, setCoalitions }}>
+    <PeerContext.Provider
+      value={{
+        peer,
+        setPeer,
+        coalitions,
+        setCoalitions,
+        projects,
+        setProjects
+      }}
+    >
       {children}
     </PeerContext.Provider>
   );

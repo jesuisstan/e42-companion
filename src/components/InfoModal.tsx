@@ -104,11 +104,13 @@ export default InfoModal;
 const styles = StyleSheet.create({
   iconButton: {
     alignSelf: 'center',
-    marginVertical: 10
+    marginVertical: 10,
+    marginHorizontal: 10
   },
   overlayContent: {
     padding: 20,
-    width: 300,
+    width: '85%',
+    maxWidth: 600,
     gap: 10,
     margin: -9
   },

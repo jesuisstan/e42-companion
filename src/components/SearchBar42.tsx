@@ -1,13 +1,13 @@
-import * as React from 'react';
+import { useState } from 'react';
 import { Platform } from 'react-native';
-import { SearchBar, SearchBarProps } from '@rneui/themed';
-import { useTheme } from '@/contexts/ThemeContext';
-import { fetchUserData } from '@/utils/fetch-functions';
-import { usePeer } from '@/contexts/PeerContext';
 import { useRouter } from 'expo-router';
-import { Button } from '@rneui/base';
+import { SearchBar, SearchBarProps } from '@rneui/themed';
+
+import { useTheme } from '@/contexts/ThemeContext';
+import { usePeer } from '@/contexts/PeerContext';
+import ButtonLoading from '@/components/ui/ButtonLoading';
+import { fetchUserData } from '@/utils/fetch-functions';
 import shootAlert from '@/utils/shoot-alert';
-import { ThemedText } from './ui/ThemedText';
 
 export type TSearchBar42Props = SearchBarProps & {
   token: string | null;
@@ -17,8 +17,8 @@ export type TSearchBar42Props = SearchBarProps & {
 const SearchBar42 = ({ token, placeholder }: TSearchBar42Props) => {
   const router = useRouter();
   const { theme } = useTheme();
-  const [value, setValue] = React.useState('');
-  const [loading, setLoading] = React.useState(false);
+  const [value, setValue] = useState('');
+  const [loading, setLoading] = useState(false);
   const { setPeer, setCoalitions } = usePeer();
 
   const handleChangeText = (text: string) => {
@@ -76,9 +76,12 @@ const SearchBar42 = ({ token, placeholder }: TSearchBar42Props) => {
         maxLength={8}
         disabled={loading}
       />
-      <Button disabled={loading} onPress={handleSearch} color={theme.C42_GREEN}>
-        Search!
-      </Button>
+      <ButtonLoading
+        title={'Search!'}
+        icon={'search'}
+        onPress={handleSearch}
+        loading={loading}
+      />
     </>
   );
 };
