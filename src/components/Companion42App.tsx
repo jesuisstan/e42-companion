@@ -29,7 +29,7 @@ const Companion42App = () => {
       <Stack>
         <Stack.Screen name="index" options={{ headerShown: false }} />
         <Stack.Screen
-          name="agenda"
+          name="profile"
           options={{
             title: 'Profile & Agenda',
             headerShown: true,

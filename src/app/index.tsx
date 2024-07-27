@@ -10,11 +10,9 @@ import {
 import SearchBar42 from '@/components/SearchBar42';
 import ThemedView from '@/components/ui/ThemedView';
 import InfoModal from '@/components/InfoModal';
-import LinkButton from '@/components/ui/LinkButton';
 import ToggleThemeButton from '@/components/ui/ToggleThemeButton';
-import { getToken, fetchUserData } from '@/utils/fetch-functions';
+import { getToken } from '@/utils/fetch-functions';
 import storage from '@/storage/storage';
-import { ThemedText } from '@/components/ui/ThemedText';
 import LogoE42companion from '@/components/ui/LogoE42companion';
 
 const HomeScreen = () => {
@@ -87,7 +85,8 @@ const styles = StyleSheet.create({
   scrollContainer: {
     flexGrow: 1,
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center', 
+    padding: 15,
   },
   centeredView: {
     alignItems: 'center',

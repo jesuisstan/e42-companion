@@ -33,7 +33,7 @@ const SearchBar42 = ({ token, placeholder }: TSearchBar42Props) => {
       const { user, coalition } = await fetchUserData(value, token);
       setPeer(user);
       setCoalitions(coalition);
-      router.push('/agenda'); // Navigate to /agenda
+      router.push('/profile');
     } catch (error) {
       if (error instanceof Error) {
         shootAlert('Oops!', "User doesn't exist");

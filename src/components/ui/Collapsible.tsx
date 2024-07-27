@@ -31,7 +31,7 @@ const Collapsible: FC<TCollapsibleProps> = ({
           size={18}
           color={theme.C42_ORANGE}
         />
-        <ThemedText type="defaultSemiBold" style={{ color: theme.C42_TEXT }}>
+        <ThemedText type="subtitle" style={{ color: theme.C42_TEXT }}>
           {title}
         </ThemedText>
       </Pressable>

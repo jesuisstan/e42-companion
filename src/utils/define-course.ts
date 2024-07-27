@@ -25,11 +25,20 @@ type TCourse = {
   created_at?: string;
   updated_at?: string;
   user?: any;
-  cursus?: TCursus;
+  cursus: TCursus;
 };
 
 export const defineCourse = (courses: TCourse[]): TCourse => {
-  // Step 1: Check if every TCourse has end_at filled
+  // Step 1: Check for a course with cursus.name === "42cursus"
+  const course42cursus = courses.find(
+    (course) => course.cursus.name === '42cursus'
+  );
+
+  if (course42cursus) {
+    return course42cursus;
+  }
+
+  // Step 2: Check if every TCourse has end_at filled
   const allEndAtFilled = courses.every((course) => course.end_at !== null);
 
   if (allEndAtFilled) {
@@ -46,7 +55,7 @@ export const defineCourse = (courses: TCourse[]): TCourse => {
       }
     });
   } else {
-    // Step 2: Find the one with grade not null
+    // Step 3: Find the one with grade not null
     const filteredCourses = courses.filter((course) => course.grade !== null);
 
     if (filteredCourses.length > 0) {
