@@ -7,6 +7,7 @@ import { usePeer } from '@/contexts/PeerContext';
 import { useRouter } from 'expo-router';
 import { Button } from '@rneui/base';
 import shootAlert from '@/utils/shoot-alert';
+import { ThemedText } from './ui/ThemedText';
 
 export type TSearchBar42Props = SearchBarProps & {
   token: string | null;
@@ -62,8 +63,8 @@ const SearchBar42 = ({ token, placeholder }: TSearchBar42Props) => {
         leftIconContainerStyle={{
           backgroundColor: theme.C42_MUTED,
           borderRadius: 50,
-          width: 42,
-          height: 42
+          width: 35,
+          height: 35
         }}
         onChangeText={handleChangeText}
         placeholder={placeholder}
@@ -76,7 +77,9 @@ const SearchBar42 = ({ token, placeholder }: TSearchBar42Props) => {
         disabled={loading}
       />
       <Button disabled={loading} onPress={handleSearch} color={theme.C42_GREEN}>
-        Search!
+        <ThemedText type="defaultSemiBold" style={{ color: theme.C42_TEXT }}>
+          Search!
+        </ThemedText>
       </Button>
     </>
   );

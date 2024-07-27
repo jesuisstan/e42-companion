@@ -7,7 +7,7 @@ type ThemeName = 'light' | 'dark';
 
 type ThemeContextType = {
   theme: Theme;
-  themeName: ThemeName; // Add this line
+  themeName: ThemeName;
   toggleTheme: () => void;
 };
 
@@ -26,7 +26,7 @@ type ThemeProviderProps = {
 };
 
 export const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
-  const [themeName, setThemeName] = useState<ThemeName>('light'); // Track theme name
+  const [themeName, setThemeName] = useState<ThemeName>('dark'); // default theme is dark
   const theme = themeName === 'light' ? lightTheme : darkTheme;
 
   const toggleTheme = () => {

@@ -19,7 +19,7 @@ const LogoE42companion = () => {
             source={require('../../../assets/images/ecole-42.png')}
           />
         </View>
-        <ThemedText type="title">compahhnion</ThemedText>
+        <ThemedText type="title">companion</ThemedText>
       </View>
     </SafeAreaView>
   );
