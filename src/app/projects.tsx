@@ -38,7 +38,7 @@ const ProjectsScreen = () => {
 
   const fetchMoreProjects = async () => {
     if (loading || !hasMore) return;
-    console.log('fetchMoreProjects');
+
     setLoading(true);
     try {
       const storedTokenData = await storage.load('dataToken');
@@ -85,7 +85,7 @@ const ProjectsScreen = () => {
         </Text>
       )}
       style={{
-        borderBottomWidth: 0.6,
+        borderWidth: 1,
         borderColor: theme.C42_ORANGE,
         backgroundColor: hexToRgba(theme.C42_BACKGROUND, 0.85)
       }}
