@@ -73,7 +73,7 @@ const ProfileScreen = () => {
 
           {/* BACK TO SEARCH SCREEN */}
           <ButtonLoading
-            title="To search"
+            title="To Search"
             onPress={() => router.push('/')}
             icon="search"
           />

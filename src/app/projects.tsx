@@ -22,16 +22,23 @@ import Spinner from '@/components/ui/Spinner';
 import { snakeToSpace } from '@/utils/format-string';
 import { C42_GREEN_DARK } from '@/style/Colors';
 
+const MAX_PROJECTS =
+  parseInt(process.env.EXPO_PUBLIC_FETCH_AMOUNT_OF_PROJECTS as string, 10) ||
+  21;
+
 const ProjectsScreen = () => {
   const router = useRouter();
   const { theme } = useTheme();
   const { peer, coalitions, projects, setProjects } = usePeer();
   const [page, setPage] = useState(2); // Start from 2 as the first page is already loaded
   const [loading, setLoading] = useState(false);
+  const [hasMore, setHasMore] = useState(
+    projects.length < MAX_PROJECTS ? false : true
+  ); // To track if more projects are available
 
   const fetchMoreProjects = async () => {
-    if (loading) return;
-
+    if (loading || !hasMore) return;
+    console.log('fetchMoreProjects');
     setLoading(true);
     try {
       const storedTokenData = await storage.load('dataToken');
@@ -40,13 +47,20 @@ const ProjectsScreen = () => {
         `https://api.intra.42.fr/v2/users/${peer.id}/projects_users`,
         {
           headers: { Authorization: `Bearer ${token}` },
-          params: { 'page[size]': 42, 'page[number]': page }
+          params: { 'page[size]': MAX_PROJECTS, 'page[number]': page }
         }
       );
-      setProjects((prevProjects: TProject[]) => [
-        ...prevProjects,
-        ...response.data
-      ]);
+
+      const fetchedProjects = response.data;
+      if (
+        fetchedProjects.length === 0 ||
+        fetchedProjects.length < MAX_PROJECTS
+      ) {
+        // No more projects or fewer projects than page size means no more pages
+        setHasMore(false);
+      }
+
+      setProjects((prevProjects) => [...prevProjects, ...fetchedProjects]);
       setPage(page + 1);
     } catch (error) {
       console.error('Error fetching more projects:', error);
@@ -120,6 +134,7 @@ const ProjectsScreen = () => {
                   </View>
                 ) : null
               }
+              initialNumToRender={MAX_PROJECTS}
             />
           ) : (
             <ThemedText
@@ -132,12 +147,12 @@ const ProjectsScreen = () => {
 
           <View style={styles.buttons}>
             <ButtonLoading
-              title="To profile"
+              title="To Profile"
               onPress={() => router.push('/profile')}
               icon="person"
             />
             <ButtonLoading
-              title="To search"
+              title="To Search"
               onPress={() => router.push('/')}
               icon="search"
             />
