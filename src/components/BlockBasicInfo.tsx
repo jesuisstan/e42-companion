@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, Image, StyleSheet } from 'react-native';
 import { useTheme } from '@/contexts/ThemeContext';
 import { TCoalition, TPeer } from '@/contexts/PeerContext';
@@ -31,7 +31,16 @@ const BlockBasicInfo = ({
     >
       <View style={styles.rowContainer}>
         <View style={styles.vertLeft}>
-          <Image style={styles.avatar} source={{ uri: peer?.image.link }} />
+          <Image
+            style={styles.avatar}
+            source={
+              peer?.image.link
+                ? {
+                    uri: peer?.image.link
+                  }
+                : require('../../assets/images/ecole-42.png')
+            }
+          />
           <ThemedText type="subtitle" style={{ color: theme.C42_TEXT }}>
             {peer?.displayname}
           </ThemedText>
@@ -43,9 +52,12 @@ const BlockBasicInfo = ({
           <SvgUri
             width="50"
             height="50"
-            uri={coalition.image_url}
-            color={coalition.color}
-            fill={coalition.color}
+            uri={
+              coalition.image_url ??
+              'https://profile.intra.42.fr/assets/42_logo-7dfc9110a5319a308863b96bda33cea995046d1731cebb735e41b16255106c12.svg'
+            }
+            color={coalition.color ?? theme.C42_TEXT}
+            fill={coalition.color ?? theme.C42_TEXT}
           />
           <ThemedText type="defaultBold" style={{ color: coalition.color }}>
             {coalition.name}

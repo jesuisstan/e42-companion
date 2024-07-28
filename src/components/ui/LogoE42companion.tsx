@@ -1,15 +1,22 @@
 import { StyleSheet, SafeAreaView, Image, View } from 'react-native';
 
+import { useTheme } from '@/contexts/ThemeContext';
 import { ThemedText } from '@/components/ui/ThemedText';
+import { hexToRgba } from '@/utils/color-transform';
 
 const LogoE42companion = () => {
+  const { theme } = useTheme();
+
   return (
     <SafeAreaView style={styles.safeArea}>
       <View
         style={{
           alignContent: 'center',
           justifyContent: 'center',
-          alignItems: 'center'
+          alignItems: 'center',
+          padding: 10,
+          borderRadius: 10,
+          backgroundColor: hexToRgba(theme.C42_ORANGE, 0.7)
         }}
       >
         <View style={{ flexDirection: 'row' }}>

@@ -1,5 +1,5 @@
-import { C42_GREEN_DARK } from '@/style/Colors';
 import { Text, type TextProps, StyleSheet } from 'react-native';
+import { C42_GREEN_DARK, C42_VIOLET_DARK } from '@/style/Colors';
 
 export type ThemedTextProps = TextProps & {
   type?:
@@ -9,6 +9,7 @@ export type ThemedTextProps = TextProps & {
     | 'subtitle'
     | 'link'
     | 'defaultBold'
+    | 'cursive'
     | 'value';
 };
 
@@ -28,6 +29,7 @@ export function ThemedText({
         type === 'subtitle' ? styles.subtitle : undefined,
         type === 'link' ? styles.link : undefined,
         type === 'value' ? styles.value : undefined,
+        type === 'cursive' ? styles.cursive : undefined,
         style
       ]}
       {...rest}
@@ -62,12 +64,17 @@ const styles = StyleSheet.create({
   link: {
     lineHeight: 30,
     fontSize: 16,
-    color: '#0a7ea4'
+    color: C42_VIOLET_DARK
   },
   value: {
     fontSize: 16,
     lineHeight: 24,
     color: C42_GREEN_DARK,
     fontWeight: 'bold'
+  },
+  cursive: {
+    fontSize: 16,
+    lineHeight: 24,
+    fontStyle: 'italic'
   }
 });

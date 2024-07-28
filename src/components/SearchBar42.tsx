@@ -56,7 +56,9 @@ const SearchBar42 = ({ token, placeholder }: TSearchBar42Props) => {
           backgroundColor: theme.C42_BACKGROUND,
           borderBottomWidth: 0,
           borderTopWidth: 0,
-          padding: 0
+          padding: 0,
+          borderRadius: 10,
+          overflow: 'hidden'
         }}
         inputContainerStyle={{ backgroundColor: theme.C42_BACKGROUND }}
         inputStyle={{ color: theme.C42_TEXT }}
@@ -73,7 +75,7 @@ const SearchBar42 = ({ token, placeholder }: TSearchBar42Props) => {
         loadingProps={{ color: theme.C42_GREEN }}
         value={value}
         onSubmitEditing={handleSearch}
-        maxLength={8}
+        maxLength={32}
         disabled={loading}
       />
       <ButtonLoading

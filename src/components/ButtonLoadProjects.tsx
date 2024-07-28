@@ -5,6 +5,7 @@ import storage from '@/storage/storage';
 import { fetchProjectsData } from '@/utils/fetch-functions';
 import { useTheme } from '@/contexts/ThemeContext';
 import { usePeer } from '@/contexts/PeerContext';
+import { sortProjectsByDate } from '@/utils/format-utils';
 
 const ButtonLoadProjects = ({ peerId }: { peerId: number }) => {
   const router = useRouter();
@@ -18,7 +19,7 @@ const ButtonLoadProjects = ({ peerId }: { peerId: number }) => {
       const storedTokenData = await storage.load('dataToken');
       const token = storedTokenData?.access_token;
       const { projects } = await fetchProjectsData(peerId, token!, 1); // Fetch the first page
-      setProjects(projects);
+      setProjects(sortProjectsByDate(projects));
       router.push('/projects'); // Navigate to ProjectsScreen
     } catch (error) {
       console.error('Error fetching projects:', error);

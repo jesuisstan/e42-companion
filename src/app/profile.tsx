@@ -1,27 +1,27 @@
 import React from 'react';
 import {
   View,
-  ImageBackground,
   SafeAreaView,
   ScrollView,
   StyleSheet
 } from 'react-native';
 import { useRouter } from 'expo-router';
 
+import Background42Image from '@/components/ui/Background42Image';
 import { useTheme } from '@/contexts/ThemeContext';
 import { usePeer } from '@/contexts/PeerContext';
-import { defineCoalition } from '@/utils/define-coalition';
-import { defineCourse } from '@/utils/define-course';
-import { ThemedText } from '@/components/ui/ThemedText';
-import { hexToRgba } from '@/utils/color-transform';
-import { C42_GREEN_DARK } from '@/style/Colors';
-import Collapsible from '@/components/ui/Collapsible';
-import { TSkill } from '@/utils/define-course';
-import BlockSkills from '@/components/BlockSkills';
-import BlockBasicInfo from '@/components/BlockBasicInfo';
-import { defineCampus } from '@/utils/define-campus';
 import ButtonLoadProjects from '@/components/ButtonLoadProjects';
 import ButtonLoading from '@/components/ui/ButtonLoading';
+import { ThemedText } from '@/components/ui/ThemedText';
+import BlockBasicInfo from '@/components/BlockBasicInfo';
+import Collapsible from '@/components/ui/Collapsible';
+import BlockSkills from '@/components/BlockSkills';
+import { defineCoalition } from '@/utils/define-coalition';
+import { defineCourse } from '@/utils/define-course';
+import { TSkill } from '@/utils/define-course';
+import { defineCampus } from '@/utils/define-campus';
+import { hexToRgba } from '@/utils/color-transform';
+import { C42_GREEN_DARK } from '@/style/Colors';
 
 const ProfileScreen = () => {
   const router = useRouter();
@@ -33,10 +33,7 @@ const ProfileScreen = () => {
 
   return (
     <SafeAreaView style={{ backgroundColor: theme.C42_BACKGROUND, flex: 1 }}>
-      <ImageBackground
-        source={{ uri: defineCoalition(coalitions).cover_url }}
-        style={styles.bgImage}
-      >
+      <Background42Image imgURL={definedCoalition.cover_url}>
         <ScrollView contentContainerStyle={styles.container}>
           {/* Basic */}
           <BlockBasicInfo
@@ -66,7 +63,9 @@ const ProfileScreen = () => {
           </Collapsible>
 
           {/* Skills */}
-          <BlockSkills skills={definedCourse.skills as TSkill[]} />
+          {definedCourse.skills.length ? (
+            <BlockSkills skills={definedCourse.skills as TSkill[]} />
+          ) : null}
 
           {/* Projects */}
           <ButtonLoadProjects peerId={peer?.id} />
@@ -78,7 +77,7 @@ const ProfileScreen = () => {
             icon="search"
           />
         </ScrollView>
-      </ImageBackground>
+      </Background42Image>
     </SafeAreaView>
   );
 };
@@ -90,11 +89,6 @@ const styles = StyleSheet.create({
     padding: 15,
     gap: 15,
     alignItems: 'center'
-  },
-  bgImage: {
-    flex: 1,
-    resizeMode: 'cover',
-    justifyContent: 'center'
   },
   contactsCard: {
     gap: 10,

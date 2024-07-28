@@ -1,12 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import {
-  View,
-  ImageBackground,
-  SafeAreaView,
-  FlatList,
-  Text,
-  StyleSheet
-} from 'react-native';
+import { useState } from 'react';
+import { View, SafeAreaView, FlatList, Text, StyleSheet } from 'react-native';
 import { useRouter } from 'expo-router';
 import axios from 'axios';
 import { List } from 'react-native-paper';
@@ -19,8 +12,17 @@ import ButtonLoading from '@/components/ui/ButtonLoading';
 import { hexToRgba } from '@/utils/color-transform';
 import storage from '@/storage/storage';
 import Spinner from '@/components/ui/Spinner';
-import { snakeToSpace } from '@/utils/format-string';
-import { C42_GREEN_DARK } from '@/style/Colors';
+import {
+  formatDate,
+  snakeToSpace,
+  sortProjectsByDate
+} from '@/utils/format-utils';
+import {
+  C42_GREEN_DARK,
+  C42_ORANGE_DARK,
+  C42_VIOLET_DARK
+} from '@/style/Colors';
+import Background42Image from '@/components/ui/Background42Image';
 
 const MAX_PROJECTS =
   parseInt(process.env.EXPO_PUBLIC_FETCH_AMOUNT_OF_PROJECTS as string, 10) ||
@@ -60,7 +62,12 @@ const ProjectsScreen = () => {
         setHasMore(false);
       }
 
-      setProjects((prevProjects) => [...prevProjects, ...fetchedProjects]);
+      const sortedFetchedProjects = sortProjectsByDate(fetchedProjects);
+
+      setProjects((prevProjects) => [
+        ...prevProjects,
+        ...sortedFetchedProjects
+      ]);
       setPage(page + 1);
     } catch (error) {
       console.error('Error fetching more projects:', error);
@@ -72,7 +79,19 @@ const ProjectsScreen = () => {
   const renderList = ({ item }: { item: TProject }) => (
     <List.Item
       title={item.project.name}
-      description={item.project.slug}
+      titleNumberOfLines={2}
+      titleStyle={{ color: theme.C42_TEXT, paddingRight: 10 }}
+      description={`${item.project.slug}.\nUpdated: ${formatDate(
+        item.updated_at ?? item.created_at
+      )}`}
+      descriptionNumberOfLines={3}
+      descriptionStyle={{
+        fontSize: 12,
+        color: C42_VIOLET_DARK,
+        fontStyle: 'italic',
+        paddingRight: 10,
+        lineHeight: 18
+      }}
       right={() => (
         <Text
           style={{
@@ -87,24 +106,14 @@ const ProjectsScreen = () => {
       style={{
         borderWidth: 1,
         borderColor: theme.C42_ORANGE,
-        backgroundColor: hexToRgba(theme.C42_BACKGROUND, 0.85)
-      }}
-      titleStyle={{ color: theme.C42_TEXT, paddingRight: 10 }}
-      descriptionStyle={{
-        fontSize: 12,
-        color: theme.C42_TEXT,
-        fontStyle: 'italic',
-        paddingRight: 10
+        backgroundColor: hexToRgba(theme.C42_BACKGROUND, 0.9)
       }}
     />
   );
 
   return (
     <SafeAreaView style={{ backgroundColor: theme.C42_BACKGROUND, flex: 1 }}>
-      <ImageBackground
-        source={{ uri: defineCoalition(coalitions).cover_url }}
-        style={styles.bgImage}
-      >
+      <Background42Image imgURL={defineCoalition(coalitions).cover_url}>
         <View style={styles.basicContainer}>
           <ThemedText
             type="title"
@@ -112,7 +121,7 @@ const ProjectsScreen = () => {
               styles.title,
               {
                 color: theme.C42_TEXT,
-                backgroundColor: hexToRgba(theme.C42_BACKGROUND, 0.8),
+                backgroundColor: hexToRgba(theme.C42_BACKGROUND, 0.9),
                 borderColor: theme.C42_GREEN
               }
             ]}
@@ -135,11 +144,18 @@ const ProjectsScreen = () => {
                 ) : null
               }
               initialNumToRender={MAX_PROJECTS}
+              maxToRenderPerBatch={MAX_PROJECTS}
             />
           ) : (
             <ThemedText
               type="defaultSemiBold"
-              style={{ color: theme.C42_TEXT }}
+              style={[
+                styles.noProjText,
+                {
+                  color: theme.C42_TEXT,
+                  backgroundColor: hexToRgba(theme.C42_BACKGROUND, 0.9)
+                }
+              ]}
             >
               Projects' list is unavailable yet
             </ThemedText>
@@ -158,7 +174,7 @@ const ProjectsScreen = () => {
             />
           </View>
         </View>
-      </ImageBackground>
+      </Background42Image>
     </SafeAreaView>
   );
 };
@@ -179,15 +195,19 @@ const styles = StyleSheet.create({
     maxWidth: 600,
     width: '100%'
   },
-  bgImage: {
-    flex: 1,
-    resizeMode: 'cover',
-    justifyContent: 'center'
-  },
   buttons: {
     flexDirection: 'row',
     justifyContent: 'space-around',
     gap: 15
+  },
+  noProjText: {
+    textAlign: 'center',
+    padding: 10,
+    borderRadius: 10,
+    borderWidth: 1,
+    maxWidth: 600,
+    width: '100%',
+    borderColor: C42_ORANGE_DARK
   }
 });
 

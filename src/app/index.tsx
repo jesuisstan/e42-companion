@@ -15,6 +15,7 @@ import { getToken } from '@/utils/fetch-functions';
 import storage from '@/storage/storage';
 import LogoE42companion from '@/components/ui/LogoE42companion';
 import shootAlert from '@/utils/shoot-alert';
+import Background42Image from '@/components/ui/Background42Image';
 
 const HomeScreen = () => {
   const [token, setToken] = useState<string | null>(null);
@@ -57,10 +58,7 @@ const HomeScreen = () => {
 
   return (
     <SafeAreaView style={styles.safeArea}>
-      <ImageBackground
-        source={require('../../assets/images/background.jpg')}
-        style={styles.bgImage}
-      >
+      <Background42Image>
         <ScrollView contentContainerStyle={styles.scrollContainer}>
           <ThemedView style={styles.centeredView}>
             <LogoE42companion />
@@ -71,7 +69,7 @@ const HomeScreen = () => {
             </View>
           </ThemedView>
         </ScrollView>
-      </ImageBackground>
+      </Background42Image>
     </SafeAreaView>
   );
 };
@@ -97,11 +95,6 @@ const styles = StyleSheet.create({
     width: '80%',
     paddingBottom: 20,
     gap: 42
-  },
-  bgImage: {
-    flex: 1,
-    resizeMode: 'cover',
-    justifyContent: 'center'
   },
   rowView: { flexDirection: 'row', gap: 42 }
 });
