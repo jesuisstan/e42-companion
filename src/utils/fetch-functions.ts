@@ -3,14 +3,13 @@ import storage, { Token } from '@/storage/storage';
 import shootAlert from './shoot-alert';
 import { TProject } from '@/contexts/PeerContext';
 
-const UID = process.env.FORTY_TWO_42_UID as string;
-const CLIENT_PRIMARY = process.env.FORTY_TWO_42_SECRET as string;
-const CLIENT_SECONDARY = process.env.FORTY_TWO_42_SECRET_NEXT as string;
+const UID = process.env.EXPO_PUBLIC_42_UID as string;
+const CLIENT_PRIMARY = process.env.EXPO_PUBLIC_42_SECRET as string;
+const CLIENT_SECONDARY = process.env.EXPO_PUBLIC_42_SECRET_NEXT as string;
 const MAX_RETRIES =
   parseInt(process.env.EXPO_PUBLIC_42_MAX_RETRIES as string, 10) || 3;
 const MAX_PROJECTS =
-  parseInt(process.env.EXPO_PUBLIC_FETCH_AMOUNT_OF_PROJECTS as string, 10) ||
-  21;
+  parseInt(process.env.EXPO_PUBLIC_FETCH_AMOUNT_OF_PROJECTS as string, 10) || 21;
 
 const fetchToken = async (clientSecret: string): Promise<string> => {
   try {
@@ -25,7 +24,6 @@ const fetchToken = async (clientSecret: string): Promise<string> => {
     );
     const tokenData: Token = response.data;
     await storage.save('dataToken', tokenData);
-    console.log('TOKEN:', tokenData.access_token); // debug
 
     return tokenData.access_token;
   } catch (error) {
