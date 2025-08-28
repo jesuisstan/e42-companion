@@ -74,7 +74,7 @@ const ProfileScreen = () => {
           <ButtonLoading
             title="To Search"
             onPress={() => router.push('/')}
-            icon="search"
+            icon="arrow-left"
           />
         </ScrollView>
       </Background42Image>

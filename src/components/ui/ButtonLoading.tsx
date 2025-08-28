@@ -6,12 +6,14 @@ const ButtonLoading = ({
   title,
   icon,
   onPress,
-  loading = false
+  loading = false,
+  disabled = false
 }: {
   title: string;
   icon?: string;
   onPress: any;
   loading?: boolean;
+  disabled?: boolean;
 }) => {
   const { theme } = useTheme();
 
@@ -19,6 +21,7 @@ const ButtonLoading = ({
     <Button
       title={title}
       loading={loading}
+      disabled={disabled}
       loadingProps={{
         size: 'small',
         color: theme.C42_BACKGROUND

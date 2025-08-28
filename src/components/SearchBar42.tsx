@@ -82,7 +82,7 @@ const SearchBar42 = ({ token, placeholder }: TSearchBar42Props) => {
         title={'Search!'}
         icon={'search'}
         onPress={handleSearch}
-        loading={loading}
+        disabled={loading}
       />
     </>
   );
